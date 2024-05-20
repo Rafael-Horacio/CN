@@ -4,13 +4,11 @@ const channelInput = document.getElementById("channelInput");
 const uploadFileBtn = document.getElementById("uploadFileBtn");
 const fileInput = document.getElementById("fileInput");
 const playlistMenu = document.getElementById("playlistMenu");
-const channelNameDisplay =
-    document.getElementById("channelNameDisplay");
+const channelNameDisplay = document.getElementById("channelNameDisplay");
 const playlists = [];
 let currentIndex = 0;
 
 const videoPlayer = videojs("videoPlayer", {
-    autoplay: false,
     controls: true,
 });
 
@@ -41,6 +39,7 @@ function playVideo(index) {
     });
     channelNameDisplay.textContent = playlists[currentIndex].name;
     updateActivePlaylistItem();
+    videoPlayer.play(); // Auto play quando um canal é selecionado
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -125,6 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 });
 
+
 function updateActivePlaylistItem() {
     const items = playlistMenu.querySelectorAll("li");
     items.forEach((item, index) => {
@@ -141,67 +141,38 @@ function addPlaylist(url, name) {
         fetch(url)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(
-                        `HTTP error! status: ${response.status}`,
-                    );
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.text();
             })
             .then((data) => {
-                // Dividir a lista de reprodução em vários canais
-                const lines = data
-                    .split("\n")
-                    .filter((line) =>
-                        line.trim().startsWith("http"),
-                    );
+                const lines = data.split("\n").filter((line) => line.trim().startsWith("http"));
                 console.log("Lista de canais adicionada:");
                 lines.forEach((line, index) => {
                     const channelUrl = line.trim();
-                    const channelName = name + (index +
-                    1); // Adicionar um número para diferenciar os canais
-                    playlists.push({
-                        url: channelUrl,
-                        name: channelName,
-                    });
+                    const channelName = name + (index + 1);
+                    playlists.push({ url: channelUrl, name: channelName });
                     console.log(`${channelName}: ${channelUrl}`);
                     const listItem = document.createElement("li");
                     listItem.className = "list-group-item";
                     listItem.innerHTML = `<i class="fas fa-tv mx-2"></i>${channelName}`;
-                    listItem.addEventListener("click", () =>
-                        playVideo(
-                            playlists.length - lines.length + index,
-                        ),
-                    );
+                    listItem.addEventListener("click", () => playVideo(playlists.length - lines.length + index));
                     playlistMenu.appendChild(listItem);
-                    // Se a lista estava vazia, começar a reprodução do primeiro vídeo
-                    if (playlists.length === lines.length) {
-                        playVideo(playlists.length - lines.length);
-                    }
                 });
             })
             .catch((error) => {
-                console.error(
-                    "Erro ao carregar lista de reprodução:",
-                    error,
-                );
-                alert(
-                    `Erro ao carregar lista de reprodução: ${error.message}`,
-                );
+                console.error("Erro ao carregar lista de reprodução:", error);
+                alert(`Erro ao carregar lista de reprodução: ${error.message}`);
             });
     }
 }
 
 function addChannel(url, name) {
-    // Verifica se a URL contém "?"
     const queryStringIndex = url.indexOf('?');
-    // Se "?"" for encontrado, corta a URL até esse ponto
     const cleanedUrl = queryStringIndex !== -1 ? url.substring(0, queryStringIndex) : url;
 
     if (cleanedUrl !== "") {
-        playlists.push({
-            url: cleanedUrl,
-            name,
-        });
+        playlists.push({ url: cleanedUrl, name });
 
         const index = playlists.length - 1;
         const listItem = document.createElement("li");
@@ -209,11 +180,6 @@ function addChannel(url, name) {
         listItem.innerHTML = `<i class="fas fa-tv mx-2"></i>${name}`;
         listItem.addEventListener("click", () => playVideo(index));
         playlistMenu.appendChild(listItem);
-
-        // Se a lista estava vazia, começar a reprodução do primeiro vídeo
-        if (playlists.length === 1) {
-            playVideo(0);
-        }
     }
 }
 
@@ -257,7 +223,6 @@ uploadFileBtn.addEventListener("click", () => {
 fileInput.addEventListener("change", handleFileInput);
 
 videoPlayer.on("ended", () => {
-    // Avança para o próximo vídeo quando o atual termina
     currentIndex = (currentIndex + 1) % playlists.length;
     playVideo(currentIndex);
 });
@@ -286,17 +251,15 @@ nextBtn.addEventListener("click", () => {
     playVideo(currentIndex);
 });
 prevBtn.addEventListener("click", () => {
-    currentIndex =
-        (currentIndex - 1 + playlists.length) % playlists.length;
+    currentIndex = (currentIndex - 1 + playlists.length) % playlists.length;
     playVideo(currentIndex);
 });
 
-const clearPlaylistBtn =
-    document.getElementById("clearPlaylistBtn");
+const clearPlaylistBtn = document.getElementById("clearPlaylistBtn");
 
 clearPlaylistBtn.addEventListener("click", () => {
-    playlists.length = 0; // Limpa a lista de reprodução
-    playlistMenu.innerHTML = ""; // Remove todos os itens do menu
-    videoPlayer.pause(); // Pausa o vídeo atual, se estiver reproduzindo
-    channelNameDisplay.textContent = ""; // Limpa o nome do canal exibido
+    playlists.length = 0;
+    playlistMenu.innerHTML = "";
+    videoPlayer.pause();
+    channelNameDisplay.textContent = "";
 });
