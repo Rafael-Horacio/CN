@@ -123,7 +123,6 @@ document.addEventListener("DOMContentLoaded", () => {
         "https://cdn-3.nxplay.com.br/TNT/index.m3u8",
         "TNT"
     );
-    playVideo(0);
 });
 
 function updateActivePlaylistItem() {
