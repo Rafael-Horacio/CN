@@ -10,7 +10,7 @@ const playlists = [];
 let currentIndex = 0;
 
 const videoPlayer = videojs("videoPlayer", {
-    autoplay: true,
+    autoplay: false,
     controls: true,
 });
 
