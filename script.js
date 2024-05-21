@@ -263,3 +263,18 @@ clearPlaylistBtn.addEventListener("click", () => {
     videoPlayer.pause();
     channelNameDisplay.textContent = "";
 });
+
+document.addEventListener("keydown", function(event) {
+    // Verifiqua se a tecla pressionada é um número entre 0 e 9
+    if (event.key >= 0 && event.key <= 9) {
+        // Converte a tecla pressionada para o número do canal (por exemplo, tecla "1" corresponde ao canal 0)
+        const channelIndex = parseInt(event.key) - 1;
+        
+        // Verifiqua se o número do canal é válido
+        if (channelIndex >= 0 && channelIndex < playlists.length) {
+            // Reproduza o canal correspondente
+            playVideo(channelIndex);
+        }
+    }
+});
+
