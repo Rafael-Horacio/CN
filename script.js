@@ -37,6 +37,9 @@ function playVideo(index) {
         src: url,
         type: type,
     });
+
+    channelNameDisplay.classList.remove("hidden");
+    
     channelNameDisplay.textContent = playlists[currentIndex].name;
     updateActivePlaylistItem();
     videoPlayer.play(); // Auto play quando um canal é selecionado
@@ -264,17 +267,38 @@ clearPlaylistBtn.addEventListener("click", () => {
     channelNameDisplay.textContent = "";
 });
 
+
+let keyPressed = ''; // Armazena as teclas pressionadas
+
 document.addEventListener("keydown", function(event) {
-    // Verifiqua se a tecla pressionada é um número entre 0 e 9
-    if (event.key >= 0 && event.key <= 9) {
-        // Converte a tecla pressionada para o número do canal (por exemplo, tecla "1" corresponde ao canal 0)
-        const channelIndex = parseInt(event.key) - 1;
+    const key = event.key;
+
+    // Se a tecla pressionada for um número válido, adicione-a à string de teclas pressionadas
+    if (!isNaN(key)) {
+        keyPressed += key;
+
+        // Mostra o número do canal na tela
+        channelNameDisplay.textContent = keyPressed;
         
-        // Verifiqua se o número do canal é válido
-        if (channelIndex >= 0 && channelIndex < playlists.length) {
-            // Reproduza o canal correspondente
-            playVideo(channelIndex);
-        }
+        // Define um tempo limite para aguardar a entrada do próximo dígito
+        setTimeout(() => {
+            const index = parseInt(keyPressed) - 1; // Converte a string para um índice (subtraindo 1 porque os índices começam em 0)
+        
+            if (!isNaN(index) && index >= 0 && index < playlists.length) {
+                playVideo(index);
+            }
+
+            // Limpa a string de teclas pressionadas para permitir novas entradas
+            keyPressed = '';
+
+            // Limpa o número do canal exibido na tela após um curto período
+            setTimeout(() => {
+                channelNameDisplay.textContent = playlists[currentIndex].name;
+            }, 1000);
+        }, 1000); // Tempo limite de 1 segundo
     }
 });
+
+
+
 
