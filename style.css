@@ -134,3 +134,6 @@ li.list-group-item.bg-dark.active {
   border: 1px solid #fff;
   border-radius: 5px;
 }
+.hidden {
+  display: none;
+}
