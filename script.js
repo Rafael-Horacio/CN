@@ -46,84 +46,80 @@ function playVideo(index) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const videoPlayer = videojs("videoPlayer", {
-        autoplay: true,
-        controls: true,
-    });
-
-    //URL para teste
+    //URL
     addChannel(
         "https://bal02.vivartec.com.br:8088/hls/livechannel1.m3u8",
-        "JOGO 01",
+        "1 | JOGO 01",
     );
     addChannel(
         "https://bal01.vivartec.com.br:8088/hls/livechannel2.m3u8",
-        "JOGO 02",
+        "2 | JOGO 02",
     );
 
     addChannel(
         "https://bal02.vivartec.com.br:8088/hls/livechannel3.m3u8",
-        "JOGO 03",
+        "3 | JOGO 03",
     );
 
     addChannel(
         "https://bal02.vivartec.com.br:8088/hls/livechannel4.m3u8",
-        "JOGO 04",
+        "4 | JOGO 04",
     );
 
     addChannel(
         "https://bal02.vivartec.com.br:8088/hls/livechannel5.m3u8",
-        "JOGO 05",
+        "5 | JOGO 05",
+    );
+    addChannel(
+        "https://cdn-3.nxplay.com.br/GLOBO_SP_TK/index.m3u8",
+        "6 | Globo SP",
     );
 
     addChannel(
         "https://brflu.walk-tv.com/5756/tracks-v1a1/mono.m3u8",
-        "Globo RJ",
+        "7 | Globo RJ",
     );
     addChannel(
         "https://cdn-1.nxplay.com.br/RECORD_PAULISTA_PFZ_NXPLAY_01/tracks-v1a1/mono.m3u8",
-        "Record SP",
+        "8 | Record SP",
     );
     addChannel(
         "https://cdn.jmvstream.com/w/LVW-10801/LVW10801_Xvg4R0u57n/playlist.m3u8",
-        "SBT SP",
+        "9 | SBT SP",
     );
     addChannel(
         "https://brflu.walk-tv.com/5815/index.m3u8",
-        "History",
+        "10 | History",
     );
-    addChannel(
-        "https://cdn-3.nxplay.com.br/GLOBO_SP_TK/index.m3u8",
-        "Globo SP",
-    );
+
     addChannel(
         "https://brflu.walk-tv.com/5932/tracks-v1a1/mono.m3u8",
-        "Sportv",
+        "11 | Sportv",
     );
     addChannel(
         "https://brflu.walk-tv.com/5931/tracks-v1a1/mono.m3u8",
-        "Sportv 2",
+        "12 | Sportv 2",
     );
     addChannel(
         "https://brflu.walk-tv.com/5901/tracks-v1a1/mono.m3u8",
-        "Telecine Fun"
+        "13 | Telecine Fun"
     );
     addChannel(
         "https://cdn-3.nxplay.com.br/ESPN_2/index.m3u8",
-        "Espn 2"
+        "14 | Espn 2"
 
     );
     addChannel(
         "https://brflu.walk-tv.com/5912/tracks-v1a1/mono.m3u8",
-        "Espn BR"
+        "15 | Espn BR"
     );
     addChannel(
         "https://brflu.walk-tv.com/5928/tracks-v1a1/mono.m3u8",
-        "Band Sports"
+        "16 | Band Sports"
     );
     addChannel(
         "https://cdn-3.nxplay.com.br/TNT/index.m3u8",
-        "TNT"
+        "17 | TNT"
     );
 });
 
